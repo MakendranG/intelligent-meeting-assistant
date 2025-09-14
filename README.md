@@ -45,13 +45,8 @@ This project was built entirely using **Kiro's AI-assisted development**:
 - **Professional interface** - Clean, responsive design that works everywhere
 - **Export summaries** - Download meeting notes as JSON
 
-## 🌐 Browser Support
 
-- ✅ **Chrome/Edge** - Full speech recognition support
-- ⚠️ **Safari** - Limited speech features
-- ❌ **Firefox** - Demo mode only (no speech API)
-
-## � P*roject Structure
+## � Project Structure
 
 ```
 ├── .kiro/          # Kiro specs, hooks, and steering
