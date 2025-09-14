@@ -265,5 +265,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Built with ❤️ by the Kiro Team#   i n t e l l i g e n t - m e e t i n g - a s s i s t a n t  
- 
+Built with ❤️ by the Kiro Team
