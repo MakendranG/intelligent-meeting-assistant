@@ -15,12 +15,14 @@ build/
 .env.test.local
 .env.production.local
 
-# IDE files
+# IDE files (but keep .kiro for hackathon submission)
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# NOTE: .kiro directory is intentionally NOT ignored for hackathon submission
 
 # OS generated files
 .DS_Store
