@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Meeting Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <h1><i class="fas fa-microphone-alt"></i> Meeting Assistant</h1>
+                <div class="header-controls">
+                    <button id="settingsBtn" class="btn-icon"><i class="fas fa-cog"></i></button>
+                    <button id="helpBtn" class="btn-icon"><i class="fas fa-question-circle"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Meeting Setup Panel -->
+            <div id="setupPanel" class="panel active">
+                <div class="panel-header">
+                    <h2>Start New Meeting</h2>
+                </div>
+                <div class="panel-content">
+                    <form id="meetingSetupForm">
+                        <div class="form-group">
+                            <label for="meetingTitle">Meeting Title</label>
+                            <input type="text" id="meetingTitle" placeholder="Enter meeting title..." required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="meetingPlatform">Platform</label>
+                            <select id="meetingPlatform">
+                                <option value="zoom">Zoom</option>
+                                <option value="teams">Microsoft Teams</option>
+                                <option value="google_meet">Google Meet</option>
+                                <option value="slack_huddles">Slack Huddles</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="meetingTemplate">Meeting Type</label>
+                            <select id="meetingTemplate">
+                                <option value="general">General Meeting</option>
+                                <option value="standup">Daily Standup</option>
+                                <option value="planning">Planning Session</option>
+                                <option value="retrospective">Retrospective</option>
+                                <option value="one_on_one">One-on-One</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="recordingEnabled" checked>
+                                Enable Recording & Transcription
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="aiProcessingEnabled" checked>
+                                Enable AI Analysis
+                            </label>
+                        </div>
+
+                        <div class="speech-mode-indicator" id="speechModeIndicator">
+                            <div class="mode-badge demo-mode">
+                                <i class="fas fa-microphone-slash"></i>
+                                <span>Demo Mode</span>
+                                <small>Using simulated transcription</small>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-play"></i> Start Meeting
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Live Meeting Panel -->
+            <div id="livePanel" class="panel">
+                <div class="panel-header">
+                    <h2 id="liveMeetingTitle">Meeting in Progress</h2>
+                    <div class="meeting-controls">
+                        <button id="pauseBtn" class="btn-secondary"><i class="fas fa-pause"></i></button>
+                        <button id="endMeetingBtn" class="btn-danger"><i class="fas fa-stop"></i> End Meeting</button>
+                    </div>
+                </div>
+                
+                <div class="panel-content">
+                    <div class="meeting-layout">
+                        <!-- Real-time Transcription -->
+                        <div class="transcription-section">
+                            <h3><i class="fas fa-closed-captioning"></i> Live Transcription</h3>
+                            <div id="transcriptionFeed" class="transcription-feed">
+                                <div class="transcription-placeholder">
+                                    Transcription will appear here when the meeting starts...
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Insights -->
+                        <div class="insights-section">
+                            <div class="insights-tabs">
+                                <button class="tab-btn active" data-tab="actionItems">Action Items</button>
+                                <button class="tab-btn" data-tab="decisions">Decisions</button>
+                                <button class="tab-btn" data-tab="participants">Participants</button>
+                            </div>
+
+                            <div id="actionItemsTab" class="tab-content active">
+                                <div class="insights-header">
+                                    <h4><i class="fas fa-tasks"></i> Action Items</h4>
+                                    <span class="count-badge" id="actionItemsCount">0</span>
+                                </div>
+                                <div id="actionItemsList" class="insights-list">
+                                    <div class="empty-state">No action items detected yet</div>
+                                </div>
+                            </div>
+
+                            <div id="decisionsTab" class="tab-content">
+                                <div class="insights-header">
+                                    <h4><i class="fas fa-gavel"></i> Decisions</h4>
+                                    <span class="count-badge" id="decisionsCount">0</span>
+                                </div>
+                                <div id="decisionsList" class="insights-list">
+                                    <div class="empty-state">No decisions detected yet</div>
+                                </div>
+                            </div>
+
+                            <div id="participantsTab" class="tab-content">
+                                <div class="insights-header">
+                                    <h4><i class="fas fa-users"></i> Participants</h4>
+                                    <span class="count-badge" id="participantsCount">0</span>
+                                </div>
+                                <div id="participantsList" class="insights-list">
+                                    <div class="empty-state">No participants detected yet</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meeting Summary Panel -->
+            <div id="summaryPanel" class="panel">
+                <div class="panel-header">
+                    <h2>Meeting Summary</h2>
+                    <div class="summary-actions">
+                        <button id="exportBtn" class="btn-secondary"><i class="fas fa-download"></i> Export</button>
+                        <button id="shareBtn" class="btn-secondary"><i class="fas fa-share"></i> Share</button>
+                        <button id="newMeetingBtn" class="btn-primary"><i class="fas fa-plus"></i> New Meeting</button>
+                    </div>
+                </div>
+                
+                <div class="panel-content">
+                    <div class="summary-layout">
+                        <div class="summary-overview">
+                            <div class="summary-stats">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="meetingDuration">--</div>
+                                    <div class="stat-label">Duration</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="totalActionItems">--</div>
+                                    <div class="stat-label">Action Items</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="totalDecisions">--</div>
+                                    <div class="stat-label">Decisions</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="participantCount">--</div>
+                                    <div class="stat-label">Participants</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summary-sections">
+                            <div class="summary-section">
+                                <h3><i class="fas fa-star"></i> Key Highlights</h3>
+                                <div id="keyHighlights" class="summary-content">
+                                    <div class="loading">Generating summary...</div>
+                                </div>
+                            </div>
+
+                            <div class="summary-section">
+                                <h3><i class="fas fa-clipboard-list"></i> Action Items</h3>
+                                <div id="summaryActionItems" class="summary-content">
+                                    <div class="loading">Processing action items...</div>
+                                </div>
+                            </div>
+
+                            <div class="summary-section">
+                                <h3><i class="fas fa-arrow-right"></i> Next Steps</h3>
+                                <div id="nextSteps" class="summary-content">
+                                    <div class="loading">Identifying next steps...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Audio Visualizer -->
+        <div class="audio-visualizer" id="audioVisualizer">
+            <div class="audio-bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <i class="fas fa-circle" id="connectionStatus"></i>
+                <span id="connectionText">Ready</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-microphone" id="micStatus"></i>
+                <span id="micText">Microphone Ready</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-brain" id="aiStatus"></i>
+                <span id="aiText">AI Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
